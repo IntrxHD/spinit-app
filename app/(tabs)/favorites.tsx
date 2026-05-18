@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Haptics from 'expo-haptics';
 import SpinWheel, { SpinWheelRef } from '@/components/SpinWheel';
 import ResultModal from '@/components/ResultModal';
 import GlowButton from '@/components/GlowButton';
@@ -20,12 +19,10 @@ export default function FavoritesScreen() {
   const handleSpin = () => {
     if (!wheelRef.current || !activeWheel) return;
     setIsSpinning(true);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     wheelRef.current.spin((w) => {
       setIsSpinning(false);
       setWinner(w);
       setShowResult(true);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       markUsed(activeWheel.id);
     });
   };
@@ -90,4 +87,10 @@ const styles = StyleSheet.create({
   subtitle: { color: '#4A4A6A', fontSize: 14, marginTop: 4 },
   spinSection: { alignItems: 'center', paddingHorizontal: 24, paddingVertical: 32 },
   wheelTitle: { color: '#FFFFFF', fontSize: 18, fontWeight: '700', marginBottom: 24 },
-  section: { paddingHorizontal: 24, margin
+  section: { paddingHorizontal: 24, marginBottom: 24 },
+  sectionTitle: { color: '#A0A0B8', fontSize: 12, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 16 },
+  empty: { alignItems: 'center', padding: 48 },
+  emptyEmoji: { fontSize: 64, marginBottom: 16 },
+  emptyTitle: { color: '#FFFFFF', fontSize: 20, fontWeight: '700', marginBottom: 8 },
+  emptySubtitle: { color: '#4A4A6A', fontSize: 14, textAlign: 'center', lineHeight: 22 },
+});

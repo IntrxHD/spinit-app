@@ -1,17 +1,13 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, Alert } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as Haptics from 'expo-haptics';
 import SpinWheel, { SpinWheelRef } from '@/components/SpinWheel';
 import ResultModal from '@/components/ResultModal';
 import GlowButton from '@/components/GlowButton';
 import WheelCard from '@/components/WheelCard';
 import { useWheels } from '@/hooks/useWheels';
-import { COLORS, SPACING, RADIUS } from '@/constants/theme';
 import { Wheel, WheelOption } from '@/types';
 import { TEMPLATES } from '@/constants/templates';
-
-const { width } = Dimensions.get('window');
 
 export default function SpinScreen() {
   const { wheels, recent, toggleFavorite, markUsed, createFromTemplate } = useWheels();
@@ -24,12 +20,10 @@ export default function SpinScreen() {
   const handleSpin = useCallback(() => {
     if (!wheelRef.current || !activeWheel) return;
     setIsSpinning(true);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     wheelRef.current.spin((w) => {
       setIsSpinning(false);
       setWinner(w);
       setShowResult(true);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       if (activeWheel) markUsed(activeWheel.id);
     });
   }, [activeWheel, markUsed]);
@@ -99,4 +93,23 @@ export default function SpinScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#0A0A0F' },
   scroll: { flex: 1 },
-  content: { paddingBottom: 32
+  content: { paddingBottom: 32 },
+  header: { paddingHorizontal: 24, paddingTop: 24, paddingBottom: 16 },
+  logoAccent: { width: 40, height: 4, borderRadius: 2, marginBottom: 8 },
+  logo: { color: '#FFFFFF', fontSize: 34, fontWeight: '900', letterSpacing: -1 },
+  tagline: { color: '#4A4A6A', fontSize: 14, marginTop: 2 },
+  wheelSection: { alignItems: 'center', paddingHorizontal: 24, paddingVertical: 32, minHeight: 420, justifyContent: 'center' },
+  wheelTitle: { color: '#FFFFFF', fontSize: 18, fontWeight: '700', marginBottom: 24 },
+  spinBtn: { marginTop: 32, alignSelf: 'stretch' },
+  emptyWheel: { alignItems: 'center', padding: 32 },
+  emptyEmoji: { fontSize: 64, marginBottom: 16 },
+  emptyTitle: { color: '#FFFFFF', fontSize: 20, fontWeight: '700', marginBottom: 8 },
+  emptySubtitle: { color: '#4A4A6A', fontSize: 14, textAlign: 'center', lineHeight: 22 },
+  section: { paddingHorizontal: 24, marginBottom: 24 },
+  sectionTitle: { color: '#A0A0B8', fontSize: 12, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 16 },
+  chips: { marginHorizontal: -24, paddingHorizontal: 24 },
+  chip: { marginRight: 8, borderRadius: 20, overflow: 'hidden', borderWidth: 1, borderColor: '#2A2A3E' },
+  chipGrad: { paddingVertical: 8, paddingHorizontal: 16, alignItems: 'center', minWidth: 80 },
+  chipEmoji: { fontSize: 24, marginBottom: 4 },
+  chipName: { color: '#A0A0B8', fontSize: 11, fontWeight: '600' },
+});

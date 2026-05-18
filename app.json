@@ -23,11 +23,16 @@
       "package": "com.spinit.app"
     },
     "plugins": [
-      "expo-router",
+      "expo-router"
     ],
     "scheme": "spinit",
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "89eb9050-9712-4929-823f-3234c979258d"
+      }
     }
   }
 }
